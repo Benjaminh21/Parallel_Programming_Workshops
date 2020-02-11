@@ -2,6 +2,7 @@
 kernel void identity(global const uchar* A, global uchar* B) {
 	int id = get_global_id(0);
 	B[id] = A[id];
+
 }
 
 kernel void filter_r(global const uchar* A, global uchar* B) {
@@ -9,7 +10,19 @@ kernel void filter_r(global const uchar* A, global uchar* B) {
 	int image_size = get_global_size(0)/3; //each image consists of 3 colour channels
 	int colour_channel = id / image_size; // 0 - red, 1 - green, 2 - blue
 
-	B[id] = A[id];
+	//if (colour_channel % 3 == 0) {
+	if(id % 3 == 0){
+		B[id] = 0;
+	}
+	else {
+		B[id] = A[id];
+	}
+}
+
+kernel void invert(global const uchar* A, global uchar* B) {
+	int id = get_global_id(0);
+	
+	B[id] = 255 - A[id];
 }
 
 //simple ND identity kernel
@@ -73,3 +86,5 @@ kernel void convolution2D(global const uchar* A, global uchar* B, constant float
 
 	B[id] = (uchar)result;
 }
+
+
