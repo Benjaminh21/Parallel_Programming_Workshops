@@ -31,4 +31,10 @@ kernel void multiadd(global const int* A, global const int* B, global int* C) {
 kernel void addf(global const float* A, global float* B, global float* C) {
 	int id = get_global_id(0);
 	C[id] = A[id] * B[id];
+	printf("Work item id = %d\n", id);
+	if (id == 0) {
+		printf("Work group size %d\n", get_local_size(0));
+	}
+	int loc_id = get_local_id(0);
+	printf("global id = %d, local id = %d\n", id, loc_id);
 }

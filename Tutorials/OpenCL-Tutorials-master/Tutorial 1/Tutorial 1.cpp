@@ -91,8 +91,14 @@ int main(int argc, char **argv) {
 		kernel_addf.setArg(0, buffer_A);
 		kernel_addf.setArg(1, buffer_B);
 		kernel_addf.setArg(2, buffer_C);
+		int local_size = 1;
 		cl::Event prof_event;
-		queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NullRange, NULL, &prof_event);
+		queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NDRange(local_size), NULL, &prof_event);
+		//queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NullRange, NULL, &prof_event);
+
+		cl::Device device = context.getInfo<CL_CONTEXT_DEVICES>()[0]; //get device
+		cerr << kernel_addf.getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(device) << endl; //get info
+		kernel_addf.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(device);
 
 		//5.3 Copy the result from device to host
 		queue.enqueueReadBuffer(buffer_C, CL_TRUE, 0, vector_size, &C[0]);
