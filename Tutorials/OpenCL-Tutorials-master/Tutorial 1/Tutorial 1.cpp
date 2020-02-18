@@ -60,13 +60,13 @@ int main(int argc, char **argv) {
 
 		//Part 4 - memory allocation
 		//host - input
-		//std::vector<int> A = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //C++11 allows this type of initialisation
-		//std::vector<int> B = { 0, 1, 2, 0, 1, 2, 0, 1, 2, 0 };
+		std::vector<int> A = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //C++11 allows this type of initialisation
+		std::vector<int> B = { 0, 1, 2, 0, 1, 2, 0, 1, 2, 0 };
 		//EDITS
 		//std::vector<int> A(1000);
 		//std::vector<int> B(1000);
-		std::vector<float> A(6.34, 2.5);
-		std::vector<float> B(7.23, 73.7);
+		//std::vector<float> A(6.34, 2.5);
+		//std::vector<float> B(7.23, 73.7);
 		
 		size_t vector_elements = A.size();//number of elements
 		size_t vector_size = A.size()*sizeof(int);//size in bytes
@@ -87,17 +87,17 @@ int main(int argc, char **argv) {
 
 		//5.2 Setup and execute the kernel (i.e. device code)
 		//Can change to a different kernel here!!!
-		cl::Kernel kernel_addf = cl::Kernel(program, "addf");
+		cl::Kernel kernel_addf = cl::Kernel(program, "avg_filter");
 		kernel_addf.setArg(0, buffer_A);
 		kernel_addf.setArg(1, buffer_B);
 		kernel_addf.setArg(2, buffer_C);
-		int local_size = 1;
+		int local_size = 0;
 		cl::Event prof_event;
-		queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NDRange(local_size), NULL, &prof_event);
+		queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NullRange, NULL, &prof_event);
 		//queue.enqueueNDRangeKernel(kernel_addf, cl::NullRange, cl::NDRange(vector_elements), cl::NullRange, NULL, &prof_event);
 
 		cl::Device device = context.getInfo<CL_CONTEXT_DEVICES>()[0]; //get device
-		cerr << kernel_addf.getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(device) << endl; //get info
+		std::cerr << kernel_addf.getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(device) << endl; //get info
 		kernel_addf.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(device);
 
 		//5.3 Copy the result from device to host

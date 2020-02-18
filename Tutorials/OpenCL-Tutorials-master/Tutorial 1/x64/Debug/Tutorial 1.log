@@ -1,11 +1,4 @@
 ﻿  Tutorial 1.cpp
-C:\Users\computing\Desktop\Parallel_Programming_Workshops\Tutorials\OpenCL-Tutorials-master\Tutorial 1\Tutorial 1.cpp(68,24): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\computing\Desktop\Parallel_Programming_Workshops\Tutorials\OpenCL-Tutorials-master\Tutorial 1\Tutorial 1.cpp(69,35): warning C4305: 'argument': truncation from 'double' to 'const _Ty'
-          with
-          [
-              _Ty=float
-          ]
-C:\Users\computing\Desktop\Parallel_Programming_Workshops\Tutorials\OpenCL-Tutorials-master\Tutorial 1\Tutorial 1.cpp(69,24): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
   Tutorial 1.vcxproj -> C:\Users\computing\Desktop\Parallel_Programming_Workshops\Tutorials\OpenCL-Tutorials-master\x64\Debug\Tutorial 1\Tutorial 1.exe
   kernels\my_kernels.cl
   1 File(s) copied
